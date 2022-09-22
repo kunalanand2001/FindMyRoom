@@ -5,7 +5,7 @@ import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, DefaultTheme as DefaultThemeNav } from '@react-navigation/native';
-
+import { auth } from './firebase';
 
 import LoginScreen from './screens/LoginScreen';
 import SignupScreen from './screens/SignupScreen';
@@ -78,27 +78,22 @@ const TabNavigator = () => {
 }
 
 const Navigation = () => {
-  // const [user,setUser] = useState('')
-  // useEffect(()=>{
-  //   const unsubscribe =  auth.onAuthStateChanged((userExist)=>{
-  //     if(userExist){
-  //          setUser(userExist)
-  //         //  userExist.getIdToken().then(jwt=>{})
-  //     }else{
-  //          setUser("")
-  //     }
-  //   })
-  //   return unsubscribe
-  // },[])
- 
-  // uncomment below line to go to home page 
-  //const user = "sanskar";
-  
-  const user = ""
+  const [user,setUser] = useState('')
+  useEffect(()=>{
+    const unsubscribe =  auth.onAuthStateChanged((userExist)=>{
+      if(userExist){
+           setUser(userExist)
+          //  userExist.getIdToken().then(jwt=>{})
+      }else{
+           setUser("")
+      }
+    })
+    return unsubscribe
+  },[])
+
   return (
     <NavigationContainer theme={MyTheme}>
       {user ? <TabNavigator /> : <AuthNavigator />}
-      {/* <AuthNavigator/> */}
     </NavigationContainer>
   )
 }

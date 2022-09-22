@@ -1,6 +1,7 @@
 import React,{useEffect,useState} from 'react'
 import { View, Text ,FlatList,StyleSheet,Linking,Platform} from 'react-native'
 import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import { store } from '../firebase';
 
 const ItemsList = () => {
 
@@ -35,14 +36,14 @@ const ItemsList = () => {
     }
   ]
 
-  // const [items,setItems] = useState([])
+  const [items,setItems] = useState([])
 
-  //   const getDetails = async ()=>{
-  //     const querySnap = await db.collection('ads').get()
-  //     const result =  querySnap.docs.map(docSnap=>docSnap.data())
-  //     console.log(result)
-  //     setItems(result)
-  //   }
+    const getDetails = async ()=>{
+      const querySnap = await store.collection('ads').get()
+      const result =  querySnap.docs.map(docSnap=>docSnap.data())
+      console.log(result)
+      setItems(result)
+    }
 
   //   const openDial = (phone)=>{
   //     if(Platform.OS ==='android'){
@@ -52,12 +53,12 @@ const ItemsList = () => {
   //     }
   //   }
 
-  //   useEffect(()=>{
-  //     getDetails()
-  //     return ()=>{
-  //       console.log("cleanup")
-  //     }
-  //   },[])
+    useEffect(()=>{
+      getDetails()
+      return ()=>{
+        console.log("cleanup")
+      }
+    },[])
 
     const renderItem = (item)=>{
         return(
@@ -81,7 +82,7 @@ const ItemsList = () => {
   return (
     <View>
       <FlatList
-        data={myitems}
+        data={items}
         keyExtractor={(item)=>item.phone}
         renderItem={({item})=>renderItem(item)}
       />

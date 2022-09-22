@@ -1,31 +1,28 @@
 import { View, Text, KeyboardAvoidingView, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { TextInput, Button } from 'react-native-paper'
-// import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-// import { initializeApp } from 'firebase/app';
-// import { firebaseConfig } from '../config';
-
-// const app = initializeApp(firebaseConfig);
-// const auth = getAuth(app);
+import { auth } from '../firebase'
 
 const SignupScreen = ({ navigation }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    // const userSignup = async ()=>{
-    //     if(!email||!password){
-    //         Alert.alert("please all all the fields")  
-    //         return
-    //       }
-    //       try{
-    //         await auth.createUserWithEmailAndPassword(email,password)
-    //       } catch(err) {
-    //         Alert.alert("Something went wrong try again.")
-    //       }
-    // }
+    const userSignup = async ()=>{
+        if(!email||!password){
+            Alert.alert("please all all the fields")  
+            return
+          }
+          try{
+            const result = await auth.createUserWithEmailAndPassword(email,password)
+            console.log("user is Registered")
+            console.log(result.user.email)
+          } catch(err) {
+            Alert.alert("Something went wrong try again.")
+          }
+    }
 
     // const userSignup = async () => {
-    //     const result = await auth().createUserWithEmailAndPassword(email, password);
+    //     const result = await auth.createUserWithEmailAndPassword(email, password);
 
     //     console.log(result.user);
 
@@ -64,7 +61,7 @@ const SignupScreen = ({ navigation }) => {
                     secureTextEntry={true}
                     onChangeText={text => setPassword(text)}
                 />
-                <Button mode="contained" >
+                <Button mode="contained" onPress={() => userSignup()}>
                     SignUp
                 </Button>
                 <TouchableOpacity onPress={() => navigation.navigate("login")}><Text style={{ textAlign: "center" }}>Login ?</Text></TouchableOpacity>
@@ -73,8 +70,6 @@ const SignupScreen = ({ navigation }) => {
         </KeyboardAvoidingView>
     )
 }
-
-// onPress={() => userSignup()}
 
 
 const styles = StyleSheet.create({

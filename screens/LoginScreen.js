@@ -1,13 +1,7 @@
 import React, { useState } from 'react'
 import { View, Text, Image, StyleSheet, KeyboardAvoidingView, TouchableOpacity, Alert } from 'react-native'
 import { TextInput, Button } from 'react-native-paper';
-// import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-// import { initializeApp } from 'firebase/app';
-// import { firebaseConfig } from '../config';
-
-// const app = initializeApp(firebaseConfig);
-// const auth = getAuth(app);
-
+import { auth } from '../firebase';
 
 const LoginScreen = ({ navigation }) => {
 
@@ -15,18 +9,19 @@ const LoginScreen = ({ navigation }) => {
     const [password, setPassword] = useState('')
 
     
-    // const userLogin = async ()=>{
-    //     if(!email||!password){
-    //         Alert.alert("please all all the fields")  
-    //         return
-    //       }
-    //       try{
-    //         const result = await auth.signInWithEmailAndPassword(email,password)
-    //         console.log(result.user)
-    //       } catch(err) {
-    //         console.log(err);
-    //       }
-    // }
+    const userLogin = async ()=>{
+        if(!email||!password){
+            Alert.alert("please all all the fields")  
+            return
+          }
+          try{
+            const result = await auth.signInWithEmailAndPassword(email,password)
+            console.log("Logged In")
+            console.log(result.user.email)
+          } catch(err) {
+            console.log(err);
+          }
+    }
 
  
 
@@ -51,7 +46,7 @@ const LoginScreen = ({ navigation }) => {
                     secureTextEntry={true}
                     onChangeText={text => setPassword(text)}
                 />
-                <Button mode="contained">
+                <Button mode="contained" onPress={() => userLogin()}>
                     Login
                 </Button>
                 <TouchableOpacity onPress={() => navigation.navigate("signup")}><Text style={{ textAlign: "center" }}>Dont have an account ?</Text></TouchableOpacity>
@@ -61,7 +56,6 @@ const LoginScreen = ({ navigation }) => {
     )
 }
 
-// onPress={() => userLogin()}
 
 const styles = StyleSheet.create({
     box1: {
