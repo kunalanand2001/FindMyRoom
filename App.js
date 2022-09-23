@@ -70,8 +70,8 @@ const TabNavigator = () => {
 
       })}
     >
-      <Tab.Screen name="home" component={ItemsList} />
-      <Tab.Screen name="create" component={CreateAd} />
+      <Tab.Screen name="home" component={ItemsList} options={{ headerShown: false }}/>
+      <Tab.Screen name="create" component={CreateAd} options={{ headerShown: false }}/>
       <Tab.Screen name="account" component={AccountScreen} />
     </Tab.Navigator>
   )

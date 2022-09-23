@@ -11,7 +11,7 @@ const LoginScreen = ({ navigation }) => {
     
     const userLogin = async ()=>{
         if(!email||!password){
-            Alert.alert("please all all the fields")  
+            Alert.alert("please enter all the fields")  
             return
           }
           try{
@@ -19,6 +19,7 @@ const LoginScreen = ({ navigation }) => {
             console.log("Logged In")
             console.log(result.user.email)
           } catch(err) {
+            Alert.alert("Invalid credentials");
             console.log(err);
           }
     }
